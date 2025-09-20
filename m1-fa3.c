@@ -25,13 +25,13 @@ int main() {
     if (jpt > 0){
         close(fd[1]);
         read(fd[0], buffer, sizeof(buffer));
+	printf("Parent jpt: %d\n", getpid());
+        printf("Child jpt: %d\n", jpt);
         printf("Parent received message: %s\n", buffer);
         close(fd[0]);
         wait(NULL);
     } else {
         close(fd[0]);
-        printf("Parent jpt: %d\n", getpid());
-        printf("Child jpt: %d\n", jpt);
         write(fd[1], message, strlen(message) + 1);
         close(fd[1]);
         exit(0);
