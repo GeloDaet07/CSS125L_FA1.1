@@ -31,8 +31,8 @@ int main() {
     } else { //Parent Process
         close(fd[1]);
         read(fd[0], buffer, sizeof(buffer));
-	    printf("Parent jpt: %d\n", getpid());
-        printf("Child jpt: %d\n", jpt);
+	    printf("Parent PID: %d\n", getpid());
+        printf("Child PID: %d\n", jpt);
         printf("Parent received message: %s\n", buffer);
         close(fd[0]);
         wait(NULL);
