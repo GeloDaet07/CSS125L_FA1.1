@@ -5,34 +5,35 @@
 #include <string.h>
 
 int main() {
-    int pipefd[2];
+    int fd[2]; //The array that holds the file descriptors for the pipe
     char message[] = "MAPUA";
     char buffer[50];
-    pid_t pid;
+    pid_t jpt;
     
-    if(pipe(pipefdd) == -1){
+    if(pipe(fd) == -1){
         perror("Pipe Failed");
         exit(1);
     }
 
-    pid = fork();
+    jpt = fork();
 
-    if (pid < 0){
+    if (jpt < 0){
         perror("Fork Failed");
         exit(1);
     }
 
-    if (pid > 0){
-        close(pipefd[0]);
-        printf("Parent PID: %d\n", getpid());
-        printf("Child PID: %d\n", pid);
-        write(pipefd[1], message, strlen(message) + 1);
-        close(pipefd[1]);
-        exit(1);
+    if (jpt > 0){
+        close(fd[0]);
+        printf("Parent jpt: %d\n", getpid());
+        printf("Child jpt: %d\n", jpt);
+        write(fd[1], message, strlen(message) + 1);
+        close(fd[1]);
+        exit(0);
     } else {
-        close(pipefd[1]);
-        read(pipefd[0], buffer, sizeof(buffer));
+        close(fd[1]);
+        read(fd[0], buffer, sizeof(buffer));
         printf("Parent received message: %s\n", buffer);
+        close(fd[0]);
         wait(NULL);
     }
 
