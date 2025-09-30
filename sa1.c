@@ -56,20 +56,17 @@ int main() {
     } else { // Parent Process
         printf("Parent (PID %d) is sending a message.\n", getpid());
 
-        //Using O_WRONLY
         fd = open(FIFO_NAME, O_WRONLY);
         write(fd, parent_msg, strlen(parent_msg) + 1);
         close(fd);
 
-        wait(NULL);
-
-        //Using O_RDONLY
+        // This is the correct place to read. It will wait for the child.
         fd = open(FIFO_NAME, O_RDONLY);
         read(fd, buffer, sizeof(buffer));
         printf("Parent (PID %d) received: '%s'\n", getpid(), buffer);
         close(fd);
+        wait(NULL);
         
-        //Part where the parent removes the FIFO (unlink).
         unlink(FIFO_NAME);
     }
 
