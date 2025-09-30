@@ -18,6 +18,9 @@ int main() {
     char child_msg[] = "Of Mapua University!";
     char buffer[100];
 
+    // Attempt to remove any leftover file first.
+    unlink(FIFO_NAME);
+
     //Pipe Creation
     if (mkfifo(FIFO_NAME, 0666) == -1) {
         perror("mkfifo");
